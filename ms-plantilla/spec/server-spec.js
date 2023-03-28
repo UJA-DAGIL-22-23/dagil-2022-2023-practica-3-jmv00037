@@ -57,9 +57,22 @@ describe('Servidor PLANTILLA:', () => {
         .expect('Content-Type', /json/)
         .expect(function (res) {
           //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
-          assert(res.body.data[0].data.hasOwnProperty('¿¿¿ PROPIEDAD ???'));
-          assert(res.body.data[0].data.nombre === "¿¿¿ VALOR ESPERADO ???");
+          assert(res.body.data[0].data.hasOwnProperty('nombre'));
+          assert(res.body.data[0].data.nombre === "Archie Moore");
 
+        })
+        .end((error) => { error ? done.fail(error) : done(); }
+        );
+    });
+
+    it('Devuelve un vector de tamaño 3 al consultar mediante getTodas', (done) => {
+      supertest(app)
+        .get('/getTodas')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function (res) {
+           //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
+          assert(res.body.data.length === 11);
         })
         .end((error) => { error ? done.fail(error) : done(); }
         );
