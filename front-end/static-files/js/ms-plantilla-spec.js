@@ -20,6 +20,24 @@ const datosDescargadosPrueba = {
     fecha: "00/00/0000"
 }
 
+const personaParaPruebas = {
+    ref: {
+        "@ref":{
+            id:"23123213"
+        }
+    },
+    ts: 1678193989710000,
+    data: {
+        nombre: 'jackie chan',
+        fecha_nacimiento: [Object],
+        titulos: [Array],
+        victorias: 999,
+        empates: 888,
+        derrotas: 777,
+        categoria: 'superpesado'
+    }  
+}
+
 
 // Función para esperar y dar tiempo a que responda el microservicio
 function esperar(ms) {
@@ -72,8 +90,8 @@ describe("Plantilla.mostrarHome: ", function () {
 })
 
 
-describe("Plantilla.mostrarAcercaDe: ", function () {
-    it("muestra datos nulos cuando le pasamos un valor nulo",
+describe("Plantilla.sustituyeTags: ", function () {
+    it("sustituyo de una plantiya los tags",
         function () {
             Plantilla.mostrarAcercaDe()
             expect(elementoTitulo.innerHTML).toBe(TITULO_ACERCA_DE)
@@ -121,6 +139,39 @@ describe("Plantilla.mostrarAcercaDe: ", function () {
             expect(elementoContenido.innerHTML.search(datosDescargadosPrueba.email) >= 0).toBeTrue()
             expect(elementoContenido.innerHTML.search(datosDescargadosPrueba.fecha) >= 0).toBeTrue()
         })
+})
+
+describe("Plantilla.personaComoFormulario: ", () => {
+    let plantillaPrueba = {};
+    let cuerpo = `
+    <tr title="### ID ###">
+        <td>### ID ###</td>
+        <td>### NOMBRE ###</td>
+        <td>### FECHA ###</td>
+        <td>### TITULOS ###</td>
+        <td>### VICTORIAS ###</td>
+        <td>### EMPATES ###</td>
+        <td>### DERROTAS ###</td>
+        <td>### CATEGORIA ###</td>
+        <td>
+                    <div><a href="javascript:Plantilla.mostrar('### ID ###')" class="opcion-secundaria mostrar">Mostrar</a></div>
+        </td>
+    </tr>
+    `;
+    it("devuelve una plantilla con los atributos cambiados cuando se le pasa una persona", () =>{
+        plantillaPrueba = Plantilla.sustituyeTags(cuerpo,personaParaPruebas);
+        //console.log(plantillaPrueba)
+        //se comprueba si el nombre esta en la plantilla
+        expect(plantillaPrueba.includes(personaParaPruebas.data.nombre)).toBeTrue();
+    })
+})
+
+describe("Plantilla.plantillaTablaPersonas.actualiza: ", () => {
+    it("devuelve una plantilla actualizada", () =>{
+        plantillaPrueba = Plantilla.plantillaTablaPersonas.actualiza(personaParaPruebas);
+        //Se comprueba si el id está en la plantilla actualizada
+        expect(plantillaPrueba.includes(personaParaPruebas.ref['@ref'].id)).toBeTrue();
+    })
 })
 
 

@@ -65,7 +65,7 @@ describe('Servidor PLANTILLA:', () => {
         );
     });
 
-    it('Devuelve un vector de tamaño 3 al consultar mediante getTodas', (done) => {
+    it('Devuelve un vector de tamaño 11 al consultar mediante getTodas', (done) => {
       supertest(app)
         .get('/getTodas')
         .expect(200)

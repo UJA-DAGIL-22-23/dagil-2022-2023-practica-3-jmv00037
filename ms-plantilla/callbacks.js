@@ -61,7 +61,22 @@ const CB_MODEL_SELECTS = {
         }
     },
 
-    
+    getTodas: async (req, res) => {
+        try {
+            let personas = await client.query(
+                q.Map(
+                    q.Paginate(q.Documents(q.Collection(COLLECTION))),
+                    q.Lambda("X", q.Get(q.Var("X")))
+                )
+            )
+            //console.log( personas ) // Para comprobar qué se ha devuelto en personas
+            CORS(res)
+                .status(200)
+                .json(personas)
+        } catch (error) {
+            CORS(res).status(500).json({ error: error.description })
+        }
+    },
 
 }
 
@@ -103,6 +118,8 @@ const CB_OTHERS = {
             CORS(res).status(500).json({ error: error.description })
         }
     },
+
+   
 
 }
 
