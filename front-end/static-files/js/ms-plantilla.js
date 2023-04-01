@@ -92,9 +92,11 @@ Plantilla.plantillaFormularioPersona.formulario = `
                         id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}" 
                         name="nombre_persona"/></td>
                 <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}" 
+                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.FECHA}" 
                         name="nombre_persona"/></td>
-                
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.TITULOS}" 
+                        name="nombre_persona"/></td>
             </tr>
         </tbody>
     </table>
@@ -216,9 +218,17 @@ Plantilla.recuperaUnaPersona = async function (idPersona, callBackFn) {
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
  */  
 Plantilla.sustituyeTags = function (plantilla, persona) {
+    let fecha = [persona.data.fecha_nacimiento.dia,persona.data.fecha_nacimiento.mes,persona.data.fecha_nacimiento.año]
     return plantilla
         .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), persona.ref['@ref'].id)
         .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), persona.data.nombre)
+        .replace(new RegExp(Plantilla.plantillaTags.FECHA, 'g'), fecha)
+        .replace(new RegExp(Plantilla.plantillaTags.TITULOS, 'g'), persona.data.titulos)
+        .replace(new RegExp(Plantilla.plantillaTags.VICTORIAS, 'g'), persona.data.victorias) 
+        .replace(new RegExp(Plantilla.plantillaTags.EMPATES, 'g'), persona.data.empates)
+        .replace(new RegExp(Plantilla.plantillaTags.DERROTAS, 'g'), persona.data.derrotas)
+        .replace(new RegExp(Plantilla.plantillaTags.CATEGORIA, 'g'), persona.data.categoria)
+
 }
 
 /**
