@@ -12,6 +12,7 @@ const elementoTitulo = document.getElementById(Frontend.ID_SECCION_PRINCIPAL_TIT
 const elementoContenido = document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO)
 const TITULO_HOME = "Plantilla Home"
 const TITULO_ACERCA_DE = "Plantilla Acerca de"
+const TITULO_LISTADO_PERSONAS = "Listado de personas"
 
 const datosDescargadosPrueba = {
     mensaje: "Mensaje de prueba descargado",
@@ -171,6 +172,14 @@ describe("Plantilla.plantillaTablaPersonas.actualiza: ", () => {
         plantillaPrueba = Plantilla.plantillaTablaPersonas.actualiza(personaParaPruebas);
         //Se comprueba si el id está en la plantilla actualizada
         expect(plantillaPrueba.includes(personaParaPruebas.ref['@ref'].id)).toBeTrue();
+    })
+})
+
+describe("Plantilla.imprimeMuchasPersonas: ", () =>{
+    let vector = [personaParaPruebas];
+    it("Se cambia el titulo", ()=>{
+        Plantilla.imprimeMuchasPersonas(vector)
+        expect(elementoTitulo.innerHTML).toBe(TITULO_LISTADO_PERSONAS)
     })
 })
 
