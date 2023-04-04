@@ -32,7 +32,26 @@ Plantilla.datosDescargadosNulos = {
     fecha: ""
 }
 
-// Cabecera de la tabla
+/// Plantilla para poner los datos de varias personas dentro de una tabla
+Plantilla.plantillaSoloNombres = {}
+
+// Cabecera de tabla con solo nombres
+Plantilla.plantillaSoloNombres.cabecera = `
+<table width="100%" class="listado-personas">
+<thead>
+    <th width="20%">Nombre</th>
+</thead>
+<tbody>
+`
+
+// cuerpo de tabla con solo nombres
+Plantilla.plantillaSoloNombres.cuerpo = `
+        <tr title="${Plantilla.plantillaTags.ID}">
+            <td>${Plantilla.plantillaTags.NOMBRE}</td>
+        </tr>
+`;
+
+// Cabecera de la tabla con todos los datos
 Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-personas">
                     <thead>
                         <th width="10%">Id</th>
@@ -300,3 +319,27 @@ Plantilla.recupera = async function (callBackFn) {
 Plantilla.listar = function () {
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
 }
+
+/**
+ * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
+ * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
+ */
+Plantilla.agregarNombres = function (vector) {
+    // console.log(vector) // Para comprobar lo que hay en vector
+
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = Plantilla.plantillaSoloNombres.cabecera
+    vector.forEach(e => msj += Plantilla.plantillaSoloNombres.cuerpo.replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), e.data.nombre))
+    msj += Plantilla.plantillaTablaPersonas.pie
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Listado de personas", msj) 
+}
+
+/**
+ * Función principal para recuperar las personas desde el MS y, posteriormente, imprimirlas.
+ */
+Plantilla.mostrarSoloNombres = function () {
+    Plantilla.recupera(Plantilla.agregarNombres);
+}
+
