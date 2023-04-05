@@ -10,6 +10,8 @@
 /// Creo el espacio de nombres
 let Plantilla = {};
 
+let ordenarNombres = false;
+
 /// Plantilla para poner los datos de varias personas dentro de una tabla
 Plantilla.plantillaTablaPersonas = {}
 
@@ -37,6 +39,7 @@ Plantilla.plantillaSoloNombres = {}
 
 // Cabecera de tabla con solo nombres
 Plantilla.plantillaSoloNombres.cabecera = `
+<button onClick="ordenarNombresPersonas()" > Ordenar </button>
 <table width="100%" class="listado-personas">
 <thead>
     <th width="20%">Nombre</th>
@@ -276,9 +279,9 @@ Plantilla.personaComoFormulario = function (persona) {
  */
 Plantilla.imprimeMuchasPersonas = function (vector) {
     // console.log(vector) // Para comprobar lo que hay en vector
-
+    let msj
     // Compongo el contenido que se va a mostrar dentro de la tabla
-    let msj = Plantilla.plantillaTablaPersonas.cabecera
+    msj = Plantilla.plantillaTablaPersonas.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualiza(e))
     msj += Plantilla.plantillaTablaPersonas.pie
 
@@ -326,7 +329,9 @@ Plantilla.listar = function () {
  */
 Plantilla.agregarNombres = function (vector) {
     // console.log(vector) // Para comprobar lo que hay en vector
-
+    if(ordenarNombres){
+        vector.sort((a,b) => (a.data.nombre > b.data.nombre) ? 1 : ((b.data.nombre > a.data.nombre) ? -1 : 0))
+    }
     // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Plantilla.plantillaSoloNombres.cabecera
     vector.forEach(e => msj += Plantilla.plantillaSoloNombres.cuerpo.replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), e.data.nombre))
@@ -343,3 +348,7 @@ Plantilla.mostrarSoloNombres = function () {
     Plantilla.recupera(Plantilla.agregarNombres);
 }
 
+function ordenarNombresPersonas(){
+    ordenarNombres = !ordenarNombres;
+    Plantilla.mostrarSoloNombres();
+}
