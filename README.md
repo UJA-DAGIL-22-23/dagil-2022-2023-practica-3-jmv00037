@@ -13,3 +13,9 @@
 ## Incremento 1
 ### HU 1 - Ver informacion autor al pulsar 'acerca de'
 <img src="./assets/img/HU1.png"/>
+
+### HU 2 - Ver un listado solo con los nombres de todos los jugadores
+<img src="./assets/img/HU2.png"/>
+
+### HU 4 - Ver un listado con todos los datos de todos los jugadores
+<img src="./assets/img/HU4.png"/>

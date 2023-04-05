@@ -13,6 +13,7 @@ const elementoContenido = document.getElementById(Frontend.ID_SECCION_PRINCIPAL_
 const TITULO_HOME = "Plantilla Home"
 const TITULO_ACERCA_DE = "Plantilla Acerca de"
 const TITULO_LISTADO_PERSONAS = "Listado de personas"
+const TITULO_LISTADO_NOMBRES = "Listado de nombres"
 
 const datosDescargadosPrueba = {
     mensaje: "Mensaje de prueba descargado",
@@ -180,6 +181,14 @@ describe("Plantilla.imprimeMuchasPersonas: ", () =>{
     it("Se cambia el titulo", ()=>{
         Plantilla.imprimeMuchasPersonas(vector)
         expect(elementoTitulo.innerHTML).toBe(TITULO_LISTADO_PERSONAS)
+    })
+})
+
+describe("Plantilla.agregarNombres: ", () =>{
+    let vector = [personaParaPruebas];
+    it("Se cambia el titulo", ()=>{
+        Plantilla.agregarNombres(vector)
+        expect(elementoTitulo.innerHTML).toBe(TITULO_LISTADO_NOMBRES)
     })
 })
 
