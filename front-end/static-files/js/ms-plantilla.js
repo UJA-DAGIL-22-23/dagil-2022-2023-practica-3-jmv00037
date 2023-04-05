@@ -46,8 +46,8 @@ Plantilla.plantillaSoloNombres.cabecera = `
 
 // cuerpo de tabla con solo nombres
 Plantilla.plantillaSoloNombres.cuerpo = `
-        <tr title="${Plantilla.plantillaTags.ID}">
-            <td>${Plantilla.plantillaTags.NOMBRE}</td>
+        <tr title="${Plantilla.plantillaTags.NOMBRE}">
+            <td style="text-align: center" >${Plantilla.plantillaTags.NOMBRE}</td>
         </tr>
 `;
 
@@ -321,7 +321,7 @@ Plantilla.listar = function () {
 }
 
 /**
- * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
+ * Función para mostrar en pantalla el nombre todas las personas que se han recuperado de la BBDD.
  * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
  */
 Plantilla.agregarNombres = function (vector) {
@@ -333,7 +333,7 @@ Plantilla.agregarNombres = function (vector) {
     msj += Plantilla.plantillaTablaPersonas.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
-    Frontend.Article.actualizar("Listado de personas", msj) 
+    Frontend.Article.actualizar("Listado de nombres", msj) 
 }
 
 /**
