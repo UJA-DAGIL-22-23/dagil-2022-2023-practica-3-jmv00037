@@ -10,7 +10,16 @@
 /// Creo el espacio de nombres
 let Plantilla = {};
 
-Plantilla.ordenarNombres = false;
+Plantilla.ordenarColumnas = {
+    id : false,
+    nombre : false,
+    fecha : false,
+    titulos : false,
+    victorias : false,
+    empates : false,
+    derrotas : false,
+    categoria : false
+};
 
 /// Plantilla para poner los datos de varias personas dentro de una tabla
 Plantilla.plantillaTablaPersonas = {}
@@ -57,14 +66,14 @@ Plantilla.plantillaSoloNombres.cuerpo = `
 // Cabecera de la tabla con todos los datos
 Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-personas">
                     <thead>
-                        <th width="10%">Id</th>
-                        <th width="20%">Nombre</th>
-                        <th width="20%">Fecha nacimiento</th>
-                        <th width="10%">Titulos</th>
-                        <th width="15%">Victorias</th>
-                        <th width="15%">Empates</th>
-                        <th width="15%">Derrotas</th>
-                        <th width="15%">Categoria</th>
+                        <th onClick="Plantilla.ordenarColumna('id')" width="10%">Id</th>
+                        <th onClick="Plantilla.ordenarColumna('nombre')" width="20%">Nombre</th>
+                        <th onClick="Plantilla.ordenarColumna('fecha')" width="20%">Fecha nacimiento</th>
+                        <th onClick="Plantilla.ordenarColumna('titulos')" width="10%">Titulos</th>
+                        <th onClick="Plantilla.ordenarColumna('victorias')" width="15%">Victorias</th>
+                        <th onClick="Plantilla.ordenarColumna('empates')" width="15%">Empates</th>
+                        <th onClick="Plantilla.ordenarColumna('derrotas')" width="15%">Derrotas</th>
+                        <th onClick="Plantilla.ordenarColumna('categoria')" width="15%">Categoria</th>
                     </thead>
                     <tbody id="data">
     `;
@@ -251,6 +260,21 @@ Plantilla.personaComoFormulario = function (persona) {
 Plantilla.imprimeMuchasPersonas = function (vector) {
     // console.log(vector) // Para comprobar lo que hay en vector
     let msj
+
+    
+    if (Plantilla.ordenarColumnas.id) {
+        vector.sort((a, b) => (a.ref['@ref'].id > b.ref['@ref'].id) ? 1 : ((b.ref['@ref'].id > a.ref['@ref'].id) ? -1 : 0))
+    }else{
+        for (const key in Plantilla.ordenarColumnas) {
+            if(Plantilla.ordenarColumnas[key]){
+                if(key == "titulos")
+                    vector.sort((a, b) => (a.data.titulos.length > b.data.titulos.length) ? 1 : ((b.data.titulos.length > a.data.titulos.length) ? -1 : 0))
+                else
+                    vector.sort((a, b) => (a.data[key] > b.data[key]) ? 1 : ((b.data[key] > a.data[key]) ? -1 : 0))
+            }
+        }
+    }
+
     // Compongo el contenido que se va a mostrar dentro de la tabla
     msj = Plantilla.plantillaTablaPersonas.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualiza(e))
@@ -299,8 +323,8 @@ Plantilla.listar = function () {
  * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
  */
 Plantilla.agregarNombres = function (vector) {
-    // console.log(vector) // Para comprobar lo que hay en vector
-    if (Plantilla.ordenarNombres) {
+    // se ordenan los nombres
+    if (Plantilla.ordenarColumnas.nombre) {
         vector.sort((a, b) => (a.data.nombre > b.data.nombre) ? 1 : ((b.data.nombre > a.data.nombre) ? -1 : 0))
     }
     // Compongo el contenido que se va a mostrar dentro de la tabla
@@ -320,7 +344,19 @@ Plantilla.mostrarSoloNombres = function () {
 }
 
 Plantilla.ordenarNombresPersonas = function() {
-    Plantilla.ordenarNombres = !Plantilla.ordenarNombres;
+    Plantilla.ordenarColumnas.nombre = !Plantilla.ordenarColumnas.nombre;
     Plantilla.mostrarSoloNombres();
 }
 
+Plantilla.ordenarColumna = function(col){
+    
+    for (const key in Plantilla.ordenarColumnas) {
+        if(key == col)
+            Plantilla.ordenarColumnas[key] = true
+        else
+            Plantilla.ordenarColumnas[key] = false
+    }
+
+    Plantilla.listar();
+
+}

@@ -197,10 +197,22 @@ describe("Plantilla.agregarNombres: ", () =>{
 describe("ordenarNombresPersonas: ", () =>{
     Plantilla.ordenarNombresPersonas()
     it("Se cambia el boleano", ()=>{
-        expect(Plantilla.ordenarNombres).toBeTrue()
+        expect(Plantilla.ordenarColumnas.nombre).toBeTrue()
     })
 })
 
+describe("Plantilla.ordenarColumna: ", () =>{
+    it("Si se pasa id el id se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('id')
+        expect(Plantilla.ordenarColumnas.id).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='id'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
+})
  
 /*
 IMPORTANTE
