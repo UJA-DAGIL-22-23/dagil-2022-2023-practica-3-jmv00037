@@ -10,6 +10,7 @@
 // Constantes para usar en las pruebas
 const elementoTitulo = document.getElementById(Frontend.ID_SECCION_PRINCIPAL_TITULO)
 const elementoContenido = document.getElementById(Frontend.ID_SECCION_PRINCIPAL_CONTENIDO)
+
 const TITULO_HOME = "Plantilla Home"
 const TITULO_ACERCA_DE = "Plantilla Acerca de"
 const TITULO_LISTADO_PERSONAS = "Listado de personas"
@@ -192,7 +193,15 @@ describe("Plantilla.agregarNombres: ", () =>{
     })
 })
 
+//NO HAGO MAS COMPROBACIONES PORQUE SE LLAMA A UNA FUNCION ASINCRONA Y NO SIEMPRE DA EL MISMO HTML
+describe("ordenarNombresPersonas: ", () =>{
+    Plantilla.ordenarNombresPersonas()
+    it("Se cambia el boleano", ()=>{
+        expect(Plantilla.ordenarNombres).toBeTrue()
+    })
+})
 
+ 
 /*
 IMPORTANTE
 ==========

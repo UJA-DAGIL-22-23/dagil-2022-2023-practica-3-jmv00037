@@ -10,7 +10,7 @@
 /// Creo el espacio de nombres
 let Plantilla = {};
 
-let ordenarNombres = false;
+Plantilla.ordenarNombres = false;
 
 /// Plantilla para poner los datos de varias personas dentro de una tabla
 Plantilla.plantillaTablaPersonas = {}
@@ -39,12 +39,12 @@ Plantilla.plantillaSoloNombres = {}
 
 // Cabecera de tabla con solo nombres
 Plantilla.plantillaSoloNombres.cabecera = `
-<button onClick="ordenarNombresPersonas()" > Ordenar </button>
+<button id="boton" onClick="Plantilla.ordenarNombresPersonas()" > Ordenar </button>
 <table width="100%" class="listado-personas">
 <thead>
     <th width="20%">Nombre</th>
 </thead>
-<tbody>
+<tbody id="data">
 `
 
 // cuerpo de tabla con solo nombres
@@ -66,7 +66,7 @@ Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-
                         <th width="15%">Derrotas</th>
                         <th width="15%">Categoria</th>
                     </thead>
-                    <tbody>
+                    <tbody id="data">
     `;
 
 // Elemento TR que muestra los datos de una persona
@@ -93,37 +93,8 @@ Plantilla.plantillaTablaPersonas.pie = `        </tbody>
              `;
 
 
-/// Plantilla para poner los datos de una persona en un tabla dentro de un formulario
-Plantilla.plantillaFormularioPersona = {}
 
 
-// Cabecera del formulario
-Plantilla.plantillaFormularioPersona.formulario = `
-<form method='post' action=''>
-    <table width="100%" class="listado-personas">
-        <thead>
-            <th width="10%">Id</th><th width="20%">Nombre</th><th width="20%">Apellidos</th><th width="10%">eMail</th>
-            <th width="15%">Año contratación</th><th width="25%">Acciones</th>
-        </thead>
-        <tbody>
-            <tr title="${Plantilla.plantillaTags.ID}">
-                <td><input type="text" class="form-persona-elemento" disabled id="form-persona-id"
-                        value="${Plantilla.plantillaTags.ID}" 
-                        name="id_persona"/></td>
-                <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}" 
-                        name="nombre_persona"/></td>
-                <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.FECHA}" 
-                        name="nombre_persona"/></td>
-                <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.TITULOS}" 
-                        name="nombre_persona"/></td>
-            </tr>
-        </tbody>
-    </table>
-</form>
-`;
 
 /**
  * Función que descarga la info MS Plantilla al llamar a una de sus rutas
@@ -238,15 +209,15 @@ Plantilla.recuperaUnaPersona = async function (idPersona, callBackFn) {
  * @param {String} Plantilla Cadena conteniendo HTML en la que se desea cambiar lso campos de la plantilla por datos
  * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
- */  
+ */
 Plantilla.sustituyeTags = function (plantilla, persona) {
-    let fecha = [persona.data.fecha_nacimiento.dia,persona.data.fecha_nacimiento.mes,persona.data.fecha_nacimiento.año]
+    let fecha = [persona.data.fecha_nacimiento.dia, persona.data.fecha_nacimiento.mes, persona.data.fecha_nacimiento.año]
     return plantilla
         .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), persona.ref['@ref'].id)
         .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), persona.data.nombre)
         .replace(new RegExp(Plantilla.plantillaTags.FECHA, 'g'), fecha)
         .replace(new RegExp(Plantilla.plantillaTags.TITULOS, 'g'), persona.data.titulos)
-        .replace(new RegExp(Plantilla.plantillaTags.VICTORIAS, 'g'), persona.data.victorias) 
+        .replace(new RegExp(Plantilla.plantillaTags.VICTORIAS, 'g'), persona.data.victorias)
         .replace(new RegExp(Plantilla.plantillaTags.EMPATES, 'g'), persona.data.empates)
         .replace(new RegExp(Plantilla.plantillaTags.DERROTAS, 'g'), persona.data.derrotas)
         .replace(new RegExp(Plantilla.plantillaTags.CATEGORIA, 'g'), persona.data.categoria)
@@ -268,7 +239,7 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
  * @returns Una cadena con la tabla que tiene ya los datos actualizados
  */
 Plantilla.personaComoFormulario = function (persona) {
-    return Plantilla.plantillaFormularioPersona.actualiza( persona );
+    return Plantilla.plantillaFormularioPersona.actualiza(persona);
 }
 
 
@@ -286,7 +257,7 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
     msj += Plantilla.plantillaTablaPersonas.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
-    Frontend.Article.actualizar("Listado de personas", msj) 
+    Frontend.Article.actualizar("Listado de personas", msj)
 }
 
 /**
@@ -329,8 +300,8 @@ Plantilla.listar = function () {
  */
 Plantilla.agregarNombres = function (vector) {
     // console.log(vector) // Para comprobar lo que hay en vector
-    if(ordenarNombres){
-        vector.sort((a,b) => (a.data.nombre > b.data.nombre) ? 1 : ((b.data.nombre > a.data.nombre) ? -1 : 0))
+    if (Plantilla.ordenarNombres) {
+        vector.sort((a, b) => (a.data.nombre > b.data.nombre) ? 1 : ((b.data.nombre > a.data.nombre) ? -1 : 0))
     }
     // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Plantilla.plantillaSoloNombres.cabecera
@@ -338,7 +309,7 @@ Plantilla.agregarNombres = function (vector) {
     msj += Plantilla.plantillaTablaPersonas.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
-    Frontend.Article.actualizar("Listado de nombres", msj) 
+    Frontend.Article.actualizar("Listado de nombres", msj)
 }
 
 /**
@@ -348,7 +319,8 @@ Plantilla.mostrarSoloNombres = function () {
     Plantilla.recupera(Plantilla.agregarNombres);
 }
 
-function ordenarNombresPersonas(){
-    ordenarNombres = !ordenarNombres;
+Plantilla.ordenarNombresPersonas = function() {
+    Plantilla.ordenarNombres = !Plantilla.ordenarNombres;
     Plantilla.mostrarSoloNombres();
 }
+
