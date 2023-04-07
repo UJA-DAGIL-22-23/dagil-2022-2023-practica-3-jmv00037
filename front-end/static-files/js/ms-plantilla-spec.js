@@ -212,6 +212,83 @@ describe("Plantilla.ordenarColumna: ", () =>{
         }
         
     })
+
+    it("Si se pasa nombre el nombre se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('nombre')
+        expect(Plantilla.ordenarColumnas.nombre).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='nombre'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
+
+    it("Si se pasa fecha la fecha se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('fecha')
+        expect(Plantilla.ordenarColumnas.fecha).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='fecha'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
+
+    it("Si se pasa nombre el nombre se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('titulos')
+        expect(Plantilla.ordenarColumnas.titulos).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='titulos'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
+
+    it("Si se pasa nombre el nombre se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('victorias')
+        expect(Plantilla.ordenarColumnas.victorias).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='victorias'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
+
+    it("Si se pasa nombre el nombre se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('empates')
+        expect(Plantilla.ordenarColumnas.empates).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='empates'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
+
+    it("Si se pasa nombre el nombre se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('derrotas')
+        expect(Plantilla.ordenarColumnas.derrotas).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='derrotas'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
+
+    it("Si se pasa nombre el nombre se pone a verdadero y los demas en falso", ()=>{
+        Plantilla.ordenarColumna('categoria')
+        expect(Plantilla.ordenarColumnas.categoria).toBeTrue()
+        for (const key in Plantilla.ordenarColumnas) {
+            if(key!='categoria'){
+                expect(Plantilla.ordenarColumnas[key]).toBe(false)
+            }
+        }
+        
+    })
 })
  
 /*
