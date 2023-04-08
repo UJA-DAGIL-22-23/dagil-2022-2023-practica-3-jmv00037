@@ -174,6 +174,7 @@ describe("Plantilla.plantillaTablaPersonas.actualiza: ", () => {
     it("devuelve una plantilla actualizada", () =>{
         plantillaPrueba = Plantilla.plantillaTablaPersonas.actualiza(personaParaPruebas);
         //Se comprueba si el id está en la plantilla actualizada
+       
         expect(plantillaPrueba.includes(personaParaPruebas.ref['@ref'].id)).toBeTrue();
     })
 })
@@ -299,13 +300,7 @@ describe("Plantilla.imprimeUnaPersona: ", () =>{
     })
 })
 
-describe("Plantilla.cambiarPersona: ", () =>{
-    it("Se cambia de persona", ()=>{
-        Plantilla.imprimeUnaPersona(personaParaPruebas)
-        expect(elementoTitulo.innerHTML).toBe(TITULO_MOSTRAR_PERSONA)
-    })
-})
- 
+
 /*
 IMPORTANTE
 ==========

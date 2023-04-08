@@ -7,9 +7,19 @@
 
 "use strict";
 
+//guarda el input de busqueda del usuario para buscar un nombre
+var nombreBuscar = ""
+
+//input donde el usuario escribe el nombre que quiere buscar
+let buscador = `
+        <input type="text" name="buscador" onblur="Plantilla.buscarPersonaPorNombre()" />
+      
+    `
+
 /// Creo el espacio de nombres
 let Plantilla = {};
 
+//indica que columna se va a ordenar 
 Plantilla.ordenarColumnas = {
     id : false,
     nombre : false,
@@ -447,7 +457,7 @@ Plantilla.mostrar = function (idPersona) { //NO SE HACE TEST PORQUE LLAMA A UN F
  * @param {String} idPersona Identificador de la persona seleccionada
  * @param {Int} idPersona Identificador de la persona seleccionada
  */
-Plantilla.cambiarPersona = function (idPersona, cambio) {
+Plantilla.cambiarPersona = function (idPersona, cambio) {//NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     let index = Plantilla.todosLosID.indexOf(idPersona)
 
     index = (index + cambio) % Plantilla.todosLosID.length
@@ -456,4 +466,35 @@ Plantilla.cambiarPersona = function (idPersona, cambio) {
 
     let idSiguientePersona = Plantilla.todosLosID[index]
     this.recuperaUnaPersona(idSiguientePersona, this.imprimeUnaPersona);
+}
+
+Plantilla.buscar = function (){
+    
+    Frontend.Article.actualizar("Mostrar una persona", buscador)
+}
+
+
+
+Plantilla.buscarPersonaPorNombre = function(){
+    nombreBuscar = document.querySelector('input').value;
+    Plantilla.recupera(Plantilla.mostrarPersonaNombreBuscador)
+}
+
+Plantilla.mostrarPersonaNombreBuscador = function(vector){
+    let personas = []
+    vector.forEach(a => {
+        if(a.data.nombre.toLowerCase().includes(nombreBuscar.toLowerCase()))
+            personas.push(a)
+    })
+
+    let msj = buscador
+
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    msj += Plantilla.plantillaTablaPersonas.cabecera
+    personas.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualiza(e))
+    msj += Plantilla.plantillaTablaPersonas.pie
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Mostrar una persona", msj)
+    
 }
