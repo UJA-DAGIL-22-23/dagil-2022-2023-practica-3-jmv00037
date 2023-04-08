@@ -96,11 +96,15 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
     `;
 
 
+
+
 // Pie de la tabla
 Plantilla.plantillaTablaPersonas.pie = `        </tbody>
              </table>
-             `;
+`;
 
+
+Plantilla.todosLosID = []
 
 /// Plantilla para poner los datos de una persona en un tabla dentro de un formulario
 Plantilla.plantillaFormularioPersona = {}
@@ -143,6 +147,8 @@ Plantilla.plantillaFormularioPersona.formulario = `
             </tr>
         </tbody>
     </table>
+    <div><a href="javascript:Plantilla.cambiarPersona('${Plantilla.plantillaTags.ID}',1)" class="opcion-secundaria mostrar">Siguiente</a></div>
+    <div><a href="javascript:Plantilla.cambiarPersona('${Plantilla.plantillaTags.ID}',-1)" class="opcion-secundaria mostrar">Anterior</a></div>
 </form>
 `;
 
@@ -310,7 +316,11 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
     // console.log(vector) // Para comprobar lo que hay en vector
     let msj
 
-    
+    if(Plantilla.todosLosID.length <= 1){
+        Plantilla.todosLosID.pop()
+        vector.forEach( a => { Plantilla.todosLosID.push(a.ref['@ref'].id) } )
+    }
+
     if (Plantilla.ordenarColumnas.id) {
         vector.sort((a, b) => (a.ref['@ref'].id > b.ref['@ref'].id) ? 1 : ((b.ref['@ref'].id > a.ref['@ref'].id) ? -1 : 0))
     }else{
@@ -410,9 +420,6 @@ Plantilla.ordenarColumna = function(col){
 
 }
 
-
-
-
 /**
  * Función para mostrar en pantalla los detalles de una persona que se ha recuperado de la BBDD por su id
  * @param {Persona} persona Datos de la persona a mostrar
@@ -425,9 +432,7 @@ Plantilla.imprimeUnaPersona = function (persona) {
 
     // Actualiza el objeto que guarda los datos mostrados
     //Plantilla.almacenaDatos(persona)
-}
-
-
+} 
 
 /**
  * Función principal para mostrar los datos de una persona desde el MS y, posteriormente, imprimirla.
@@ -435,4 +440,20 @@ Plantilla.imprimeUnaPersona = function (persona) {
  */
 Plantilla.mostrar = function (idPersona) { //NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
+}
+
+/**
+ * Funciona para mostrar la siguiente o la anterior persona 
+ * @param {String} idPersona Identificador de la persona seleccionada
+ * @param {Int} idPersona Identificador de la persona seleccionada
+ */
+Plantilla.cambiarPersona = function (idPersona, cambio) {
+    let index = Plantilla.todosLosID.indexOf(idPersona)
+
+    index = (index + cambio) % Plantilla.todosLosID.length
+    if(index == -1)
+        index=10
+
+    let idSiguientePersona = Plantilla.todosLosID[index]
+    this.recuperaUnaPersona(idSiguientePersona, this.imprimeUnaPersona);
 }

@@ -27,7 +27,7 @@ const datosDescargadosPrueba = {
 const personaParaPruebas = {
     ref: {
         "@ref":{
-            id:"23123213"
+            id:"358544981055504985"
         }
     },
     ts: 1678193989710000,
@@ -294,6 +294,13 @@ describe("Plantilla.ordenarColumna: ", () =>{
 
 describe("Plantilla.imprimeUnaPersona: ", () =>{
     it("Se cambia el titulo", ()=>{
+        Plantilla.imprimeUnaPersona(personaParaPruebas)
+        expect(elementoTitulo.innerHTML).toBe(TITULO_MOSTRAR_PERSONA)
+    })
+})
+
+describe("Plantilla.cambiarPersona: ", () =>{
+    it("Se cambia de persona", ()=>{
         Plantilla.imprimeUnaPersona(personaParaPruebas)
         expect(elementoTitulo.innerHTML).toBe(TITULO_MOSTRAR_PERSONA)
     })
