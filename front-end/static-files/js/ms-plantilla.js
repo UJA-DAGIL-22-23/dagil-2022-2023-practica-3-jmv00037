@@ -102,7 +102,49 @@ Plantilla.plantillaTablaPersonas.pie = `        </tbody>
              `;
 
 
+/// Plantilla para poner los datos de una persona en un tabla dentro de un formulario
+Plantilla.plantillaFormularioPersona = {}
 
+// Cabecera del formulario
+Plantilla.plantillaFormularioPersona.formulario = `
+<form method='post' action=''>
+    <table width="100%" class="listado-personas">
+        <thead>
+            <th width="10%">Id</th><th width="20%">Nombre</th><th width="20%">Fecha nacimiento</th><th width="20%">Titulos</th>
+            <th width="5%">Victorias</th><th width="5%">Empates</th><th width="5%">Derrotas</th>
+            <th width="10%">Categoria</th>
+        </thead>
+        <tbody>
+            <tr title="${Plantilla.plantillaTags.ID}">
+                <td><input type="text" class="form-persona-elemento" disabled id="form-persona-id"
+                        value="${Plantilla.plantillaTags.ID}" 
+                        name="id_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}" 
+                        name="nombre_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-fecha" value="${Plantilla.plantillaTags.FECHA}" 
+                        name="fecha_nacimiento"/></td>
+                <td><input type="email" class="form-persona-elemento editable" disabled
+                        id="form-titulos" required value="${Plantilla.plantillaTags.TITULOS}" 
+                        name="titulos"/></td>
+                <td><input type="email" class="form-persona-elemento editable" disabled
+                        id="form-titulos" required value="${Plantilla.plantillaTags.VICTORIAS}" 
+                        name="titulos"/></td>
+                <td><input type="email" class="form-persona-elemento editable" disabled
+                        id="form-titulos" required value="${Plantilla.plantillaTags.EMPATES}" 
+                        name="titulos"/></td>
+                <td><input type="email" class="form-persona-elemento editable" disabled
+                        id="form-titulos" required value="${Plantilla.plantillaTags.DERROTAS}" 
+                        name="titulos"/></td>
+                <td><input type="email" class="form-persona-elemento editable" disabled
+                        id="form-titulos" required value="${Plantilla.plantillaTags.CATEGORIA}" 
+                        name="titulos"/></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+`;
 
 
 /**
@@ -251,7 +293,14 @@ Plantilla.personaComoFormulario = function (persona) {
     return Plantilla.plantillaFormularioPersona.actualiza(persona);
 }
 
-
+/**
+ * Actualiza el formulario con los datos de la persona que se le pasa
+ * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
+ * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
+ */
+Plantilla.plantillaFormularioPersona.actualiza = function (persona) {
+    return Plantilla.sustituyeTags(this.formulario, persona)
+}
 
 /**
  * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
@@ -359,4 +408,32 @@ Plantilla.ordenarColumna = function(col){
 
     Plantilla.listar();
 
+}
+
+
+
+
+/**
+ * Función para mostrar en pantalla los detalles de una persona que se ha recuperado de la BBDD por su id
+ * @param {Persona} persona Datos de la persona a mostrar
+ */
+Plantilla.imprimeUnaPersona = function (persona) {
+    // console.log(persona) // Para comprobar lo que hay en vector
+    let msj = Plantilla.personaComoFormulario(persona);
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Mostrar una persona", msj)
+
+    // Actualiza el objeto que guarda los datos mostrados
+    //Plantilla.almacenaDatos(persona)
+}
+
+
+
+/**
+ * Función principal para mostrar los datos de una persona desde el MS y, posteriormente, imprimirla.
+ * @param {String} idPersona Identificador de la persona a mostrar
+ */
+Plantilla.mostrar = function (idPersona) {
+    this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
 }
