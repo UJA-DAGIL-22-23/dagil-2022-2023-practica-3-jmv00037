@@ -412,7 +412,7 @@ Plantilla.mostrarSoloNombres = function () {//NO SE HACE TEST PORQUE LLAMA A UN 
     Plantilla.recupera(Plantilla.agregarNombres);
 }
 
-Plantilla.ordenarNombresPersonas = function() {
+Plantilla.ordenarNombresPersonas = function() {//NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     Plantilla.ordenarColumnas.nombre = !Plantilla.ordenarColumnas.nombre;
     Plantilla.mostrarSoloNombres();
 }
@@ -468,20 +468,28 @@ Plantilla.cambiarPersona = function (idPersona, cambio) {//NO SE HACE TEST PORQU
     this.recuperaUnaPersona(idSiguientePersona, this.imprimeUnaPersona);
 }
 
+/**
+ * Funcion para crear el buscador
+ */
 Plantilla.buscar = function (){
-    
-    Frontend.Article.actualizar("Mostrar una persona", buscador)
+    Frontend.Article.actualizar("Mostrar busqueda", buscador)
 }
 
-
-
-Plantilla.buscarPersonaPorNombre = function(){
+/**
+ * Funcion para actulizar la varible donde se guarda la busqueda y obtener el vector de la base de datos
+ */
+Plantilla.buscarPersonaPorNombre = function(){//NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     nombreBuscar = document.querySelector('input').value;
     Plantilla.recupera(Plantilla.mostrarPersonaNombreBuscador)
 }
 
+/**
+ * Funcion para mostrar la lista de personas que coinciden con la busqueda del nombre
+ * @param {Vector_de_personas} vector 
+ */
 Plantilla.mostrarPersonaNombreBuscador = function(vector){
     let personas = []
+    //console.log(vector)
     vector.forEach(a => {
         if(a.data.nombre.toLowerCase().includes(nombreBuscar.toLowerCase()))
             personas.push(a)
@@ -495,6 +503,6 @@ Plantilla.mostrarPersonaNombreBuscador = function(vector){
     msj += Plantilla.plantillaTablaPersonas.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
-    Frontend.Article.actualizar("Mostrar una persona", msj)
+    Frontend.Article.actualizar("Mostrar busqueda", msj)
     
 }

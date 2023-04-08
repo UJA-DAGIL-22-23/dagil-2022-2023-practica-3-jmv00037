@@ -16,6 +16,7 @@ const TITULO_ACERCA_DE = "Plantilla Acerca de"
 const TITULO_LISTADO_PERSONAS = "Listado de personas"
 const TITULO_LISTADO_NOMBRES = "Listado de nombres"
 const TITULO_MOSTRAR_PERSONA = "Mostrar una persona"
+const TITULO_BUSCAR = "Mostrar busqueda"
 
 const datosDescargadosPrueba = {
     mensaje: "Mensaje de prueba descargado",
@@ -195,14 +196,6 @@ describe("Plantilla.agregarNombres: ", () =>{
     })
 })
 
-//NO HAGO MAS COMPROBACIONES PORQUE SE LLAMA A UNA FUNCION ASINCRONA Y NO SIEMPRE DA EL MISMO HTML
-describe("ordenarNombresPersonas: ", () =>{
-    Plantilla.ordenarNombresPersonas()
-    it("Se cambia el boleano", ()=>{
-        expect(Plantilla.ordenarColumnas.nombre).toBeTrue()
-    })
-})
-
 describe("Plantilla.ordenarColumna: ", () =>{
     it("Si se pasa id el id se pone a verdadero y los demas en falso", ()=>{
         Plantilla.ordenarColumna('id')
@@ -297,6 +290,25 @@ describe("Plantilla.imprimeUnaPersona: ", () =>{
     it("Se cambia el titulo", ()=>{
         Plantilla.imprimeUnaPersona(personaParaPruebas)
         expect(elementoTitulo.innerHTML).toBe(TITULO_MOSTRAR_PERSONA)
+    })
+})
+
+describe("Plantilla.buscar: ", () =>{
+    
+    it("Se cambia el titulo y se crea un buscador", ()=>{
+        Plantilla.buscar()
+        expect(elementoTitulo.innerHTML).toBe(TITULO_BUSCAR)
+        expect(elementoContenido.innerHTML.includes('input type="text"')).toBeTrue()
+    })
+})
+
+describe("Plantilla.mostrarPersonaNombreBuscador: ", () =>{
+    let vector = [personaParaPruebas];
+    it("Si se busca 'jack' da como resultada una lista con solamente Jackie Chan ", ()=>{
+        nombreBuscar = "jack"
+        Plantilla.mostrarPersonaNombreBuscador(vector)
+        expect(elementoTitulo.innerHTML).toBe(TITULO_BUSCAR)
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.nombre)).toBeTrue()
     })
 })
 
