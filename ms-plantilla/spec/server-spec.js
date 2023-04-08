@@ -78,6 +78,19 @@ describe('Servidor PLANTILLA:', () => {
         );
     });
 
+    it('Devuelve Archie Moore al consultar mediante getID/358542329505645145', (done) => {
+      supertest(app)
+        .get('/getID/358542329505645145')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function (res) {
+           //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
+          assert(res.body.data.nombre === "Archie Moore");
+        })
+        .end((error) => { error ? done.fail(error) : done(); }
+        );
+    });
+
   })
 });
 
