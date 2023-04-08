@@ -15,6 +15,7 @@ const TITULO_HOME = "Plantilla Home"
 const TITULO_ACERCA_DE = "Plantilla Acerca de"
 const TITULO_LISTADO_PERSONAS = "Listado de personas"
 const TITULO_LISTADO_NOMBRES = "Listado de nombres"
+const TITULO_MOSTRAR_PERSONA = "Mostrar una persona"
 
 const datosDescargadosPrueba = {
     mensaje: "Mensaje de prueba descargado",
@@ -288,6 +289,13 @@ describe("Plantilla.ordenarColumna: ", () =>{
             }
         }
         
+    })
+})
+
+describe("Plantilla.imprimeUnaPersona: ", () =>{
+    it("Se cambia el titulo", ()=>{
+        Plantilla.imprimeUnaPersona(personaParaPruebas)
+        expect(elementoTitulo.innerHTML).toBe(TITULO_MOSTRAR_PERSONA)
     })
 })
  

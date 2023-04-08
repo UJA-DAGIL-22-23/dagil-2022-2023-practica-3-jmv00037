@@ -338,7 +338,7 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
  * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
  */
 
-Plantilla.recupera = async function (callBackFn) {
+Plantilla.recupera = async function (callBackFn) {//NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     let response = null
 
     // Intento conectar con el microservicio personas
@@ -388,7 +388,7 @@ Plantilla.agregarNombres = function (vector) {
 /**
  * Función principal para recuperar las personas desde el MS y, posteriormente, imprimirlas.
  */
-Plantilla.mostrarSoloNombres = function () {
+Plantilla.mostrarSoloNombres = function () {//NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     Plantilla.recupera(Plantilla.agregarNombres);
 }
 
@@ -418,7 +418,6 @@ Plantilla.ordenarColumna = function(col){
  * @param {Persona} persona Datos de la persona a mostrar
  */
 Plantilla.imprimeUnaPersona = function (persona) {
-    // console.log(persona) // Para comprobar lo que hay en vector
     let msj = Plantilla.personaComoFormulario(persona);
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
@@ -434,6 +433,6 @@ Plantilla.imprimeUnaPersona = function (persona) {
  * Función principal para mostrar los datos de una persona desde el MS y, posteriormente, imprimirla.
  * @param {String} idPersona Identificador de la persona a mostrar
  */
-Plantilla.mostrar = function (idPersona) {
+Plantilla.mostrar = function (idPersona) { //NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
 }
