@@ -9,6 +9,21 @@
 ## Coleccion de fauna
 ![coleccion de fauna ](./assets/img/coleccion-fauna.png)
 
+# IMPORTANTE
+Antes de empezar cabe recalcar que algunas funciones del fichero ms-plantilla.js no tienen TDD debido a que son funciones asincronas o son funciones que llaman a otras que son asincronas. Son las siguientes: 
++ Plantilla.buscarPersonaPorNombre
++ Plantilla.cambiarPersona
++ Plantilla.mostrar
++ Plantilla.ordenarNombresPersonas
++ Plantilla.mostrarSoloNombres
++ Plantilla.listar
++ Plantilla.recupera
++ Plantilla.recuperaUnaPersona
++ Plantilla.procesarHome
++ Plantilla.procesarAcercaDe
++ Plantilla.descargarRuta
+
+# Incrementos
 
 ## Incremento 1
 ### HU 1 - Ver informacion autor al pulsar 'acerca de'

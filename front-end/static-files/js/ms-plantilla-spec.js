@@ -172,11 +172,18 @@ describe("Plantilla.personaComoFormulario: ", () => {
 })
 
 describe("Plantilla.plantillaTablaPersonas.actualiza: ", () => {
-    it("devuelve una plantilla actualizada", () =>{
+    it("devuelve una plantilla actualizada si se le pasa una persona", () =>{
         plantillaPrueba = Plantilla.plantillaTablaPersonas.actualiza(personaParaPruebas);
         //Se comprueba si el id está en la plantilla actualizada
        
         expect(plantillaPrueba.includes(personaParaPruebas.ref['@ref'].id)).toBeTrue();
+    })
+
+    it("devuelve una plantilla por defecto si no se le pasa nada", () =>{
+        plantillaPrueba = Plantilla.plantillaTablaPersonas.actualiza();
+        //Se comprueba si el id está en la plantilla actualizada
+       
+        expect(plantillaPrueba.includes(Plantilla.plantillaTags.ID)).toBeTrue();
     })
 })
 
@@ -309,6 +316,24 @@ describe("Plantilla.mostrarPersonaNombreBuscador: ", () =>{
         Plantilla.mostrarPersonaNombreBuscador(vector)
         expect(elementoTitulo.innerHTML).toBe(TITULO_BUSCAR)
         expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.nombre)).toBeTrue()
+    })
+
+    it("Si se busca la cadena vacia da como resultada una lista con todas las personas ", ()=>{
+        nombreBuscar = ""
+        Plantilla.mostrarPersonaNombreBuscador(vector)
+        expect(elementoTitulo.innerHTML).toBe(TITULO_BUSCAR)
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.nombre)).toBeTrue()
+    })
+})
+
+describe("Plantilla.plantillaFormularioPersona.actualiza", () =>{
+    it("Al pasarle una persona devuelve un formulario con los datos de la persona", ()=>{
+        let resultado = Plantilla.plantillaFormularioPersona.actualiza(personaParaPruebas)
+        expect(resultado.includes(personaParaPruebas.data.nombre)).toBeTrue()
+    })
+    it("Al pasarle nada devuelve un formulario por defecto", ()=>{
+        let resultado = Plantilla.plantillaFormularioPersona.actualiza()
+        expect(resultado.includes(Plantilla.plantillaTags.ID)).toBeTrue()
     })
 })
 

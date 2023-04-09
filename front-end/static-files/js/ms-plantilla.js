@@ -278,6 +278,8 @@ Plantilla.recuperaUnaPersona = async function (idPersona, callBackFn) {
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
  */
 Plantilla.sustituyeTags = function (plantilla, persona) {
+    if(persona === undefined)
+        return plantilla
     let fecha = [persona.data.fecha_nacimiento.dia, persona.data.fecha_nacimiento.mes, persona.data.fecha_nacimiento.año]
     return plantilla
         .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), persona.ref['@ref'].id)
