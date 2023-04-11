@@ -58,7 +58,7 @@ Plantilla.plantillaSoloNombres = {}
 
 // Cabecera de tabla con solo nombres
 Plantilla.plantillaSoloNombres.cabecera = `
-<button id="boton" onClick="Plantilla.ordenarNombresPersonas()" > Ordenar </button>
+<button id="boton" onClick="Plantilla.mostrarSoloNombres()" > Ordenar </button>
 <table width="100%" class="listado-personas">
 <thead>
     <th width="20%">Nombre</th>
@@ -411,12 +411,8 @@ Plantilla.agregarNombres = function (vector) {
  * Función principal para recuperar las personas desde el MS y, posteriormente, imprimirlas.
  */
 Plantilla.mostrarSoloNombres = function () {//NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
-    Plantilla.recupera(Plantilla.agregarNombres);
-}
-
-Plantilla.ordenarNombresPersonas = function() {//NO SE HACE TEST PORQUE LLAMA A UN FUNCION ASINCRONA
     Plantilla.ordenarColumnas.nombre = !Plantilla.ordenarColumnas.nombre;
-    Plantilla.mostrarSoloNombres();
+    Plantilla.recupera(Plantilla.agregarNombres);
 }
 
 Plantilla.ordenarColumna = function(col){

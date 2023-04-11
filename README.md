@@ -20,7 +20,6 @@ Antes de empezar cabe recalcar que algunas funciones del fichero ms-plantilla.js
 + Plantilla.buscarPersonaPorNombre
 + Plantilla.cambiarPersona
 + Plantilla.mostrar
-+ Plantilla.ordenarNombresPersonas
 + Plantilla.mostrarSoloNombres
 + Plantilla.listar
 + Plantilla.recupera
