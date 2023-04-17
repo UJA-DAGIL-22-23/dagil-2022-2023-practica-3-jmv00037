@@ -164,10 +164,25 @@ describe("Plantilla.personaComoFormulario: ", () => {
     </tr>
     `;
     it("devuelve una plantilla con los atributos cambiados cuando se le pasa una persona", () =>{
-        plantillaPrueba = Plantilla.sustituyeTags(cuerpo,personaParaPruebas);
+        plantillaPrueba = Plantilla.personaComoFormulario(personaParaPruebas);
         //console.log(plantillaPrueba)
         //se comprueba si el nombre esta en la plantilla
+        expect(plantillaPrueba.includes(personaParaPruebas.ref['@ref'].id)).toBeTrue();
         expect(plantillaPrueba.includes(personaParaPruebas.data.nombre)).toBeTrue();
+        expect(plantillaPrueba.includes(personaParaPruebas.data.categoria)).toBeTrue();
+        expect(plantillaPrueba.includes(personaParaPruebas.data.victorias)).toBeTrue();
+        expect(plantillaPrueba.includes(personaParaPruebas.data.titulos)).toBeTrue();
+
+    })
+
+    it("devuelve una plantilla por defecto si no se le pasa nada como argumento", ()=>{
+        plantillaPrueba = Plantilla.personaComoFormulario();
+        //console.log(plantillaPrueba)
+        expect(plantillaPrueba.includes(Plantilla.plantillaTags.ID)).toBeTrue();
+        expect(plantillaPrueba.includes(Plantilla.plantillaTags.NOMBRE)).toBeTrue();
+        expect(plantillaPrueba.includes(Plantilla.plantillaTags.CATEGORIA)).toBeTrue();
+        expect(plantillaPrueba.includes(Plantilla.plantillaTags.DERROTAS)).toBeTrue();
+        expect(plantillaPrueba.includes(Plantilla.plantillaTags.EMPATES)).toBeTrue();
     })
 })
 
@@ -188,18 +203,36 @@ describe("Plantilla.plantillaTablaPersonas.actualiza: ", () => {
 })
 
 describe("Plantilla.imprimeMuchasPersonas: ", () =>{
+   
     let vector = [personaParaPruebas];
     it("Se cambia el titulo", ()=>{
         Plantilla.imprimeMuchasPersonas(vector)
         expect(elementoTitulo.innerHTML).toBe(TITULO_LISTADO_PERSONAS)
     })
+
+    it("Se cambia el contenido del cuerpo", ()=>{ 
+        Plantilla.imprimeMuchasPersonas(vector)
+        //console.log(elementoContenido.innerHTML)
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.nombre)).toBeTrue()
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.categoria)).toBeTrue()
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.derrotas)).toBeTrue()
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.titulos)).toBeTrue()
+
+    })
 })
 
 describe("Plantilla.agregarNombres: ", () =>{
+    let cuerpo = '<td style="text-align: center">jackie chan</td>'
     let vector = [personaParaPruebas];
     it("Se cambia el titulo", ()=>{
         Plantilla.agregarNombres(vector)
         expect(elementoTitulo.innerHTML).toBe(TITULO_LISTADO_NOMBRES)
+    })
+
+    it("Se cambia el contenido del cuerpo", ()=>{ 
+        Plantilla.agregarNombres(vector)
+        //console.log(elementoContenido.innerHTML)
+        expect(elementoContenido.innerHTML.includes(cuerpo)).toBeTrue()
     })
 })
 
@@ -297,6 +330,22 @@ describe("Plantilla.imprimeUnaPersona: ", () =>{
     it("Se cambia el titulo", ()=>{
         Plantilla.imprimeUnaPersona(personaParaPruebas)
         expect(elementoTitulo.innerHTML).toBe(TITULO_MOSTRAR_PERSONA)
+    })
+
+    it("Se cambia el contenido del cuerpo si se le pasa una persona", ()=>{
+        Plantilla.imprimeUnaPersona(personaParaPruebas)
+        //console.log(elementoContenido.innerHTML)
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.nombre)).toBeTrue()
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.categoria)).toBeTrue()
+        expect(elementoContenido.innerHTML.includes(personaParaPruebas.data.victorias)).toBeTrue()
+    })
+
+    it("si no se le pasa nada como argumento devuelve una plantilla por defecto", ()=>{
+        Plantilla.imprimeUnaPersona()
+        //console.log(elementoContenido.innerHTML)
+        expect(elementoContenido.innerHTML.includes(Plantilla.plantillaTags.ID)).toBeTrue()
+        expect(elementoContenido.innerHTML.includes(Plantilla.plantillaTags.NOMBRE)).toBeTrue()
+        expect(elementoContenido.innerHTML.includes(Plantilla.plantillaTags.CATEGORIA)).toBeTrue()
     })
 })
 
